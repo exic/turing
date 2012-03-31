@@ -11,10 +11,12 @@ void storeRule(char* line, int counter);
 int followRule(char* inout);
 void readRules(char* file);
 void readInit(char* file);
+int findFinalState();
 
 char rules[RULESBUFFER][5];
 int rulescount = 0;
 char status;
+char finalstatus;
 struct tape *tape;
 
 int main(int argc, char* argv[]) {
@@ -61,7 +63,6 @@ int main(int argc, char* argv[]) {
     }
 
     printf("\nReached end status :-)\n");
-    break;
 
     return 0;
 }
