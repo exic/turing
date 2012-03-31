@@ -14,7 +14,7 @@ void readInit(char* file);
 
 char rules[RULESBUFFER][5];
 int rulescount = 0;
-char status = 'A';
+char status;
 struct tape *tape;
 
 int isEndStatus(status) {
@@ -37,13 +37,18 @@ int main(int argc, char* argv[])
     readRules(argv[1]);
     readInit(argv[2]);
 
+    // Start status is status of first line
+    status = rules[0][0];
+
+    int step = 0;
+    printf("\n######### Step %i #########\n\n", step++);
     print(tape);
 
     char rule[] = {"000"};
 
-    int step = 0;
     while (1) {
-        printf("Step %i\n", step++);
+        printf("\n######### Step %i #########\n\n", step++);
+
         rule[0] = status;
         rule[1] = read_char(tape);
 
@@ -57,12 +62,13 @@ int main(int argc, char* argv[])
 
         write_char(tape, rule[0]);
         status = rule[1];
-        printf("move: %c\n", rule[2]);
+//        printf("move: %c\n", rule[2]);
         move(tape, rule[2]);
-        printf("pointer position: %i\n", get_position_index(tape));
+//        printf("pointer position: %i\n", get_position_index(tape));
 
         print(tape);
         if (isEndStatus(status)) {
+            printf("\nReached end status :-)\n");
             break;
         }
     }
@@ -104,7 +110,6 @@ void readInit(char* file) {
 
     int counter = 0;
     while (fgets(text, sizeof(text), f) != 0) {
-        printf("got char: \"%c\"\n", text[0]);
         if (text[0] == '\n' || text[0] == '\r') {
             continue;
         }
