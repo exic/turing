@@ -17,13 +17,6 @@ int rulescount = 0;
 char status;
 struct tape *tape;
 
-int isEndStatus(status) {
-    if (status == 'e') {
-        return 1;
-    }
-    return 0;
-}
-
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         printf("USAGE: Turing.exe <RULES> <INIT>");
@@ -36,9 +29,9 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
     init(tape);
-
     readRules(argv[1]);
     readInit(argv[2]);
+    finalstatus = (char)findFinalState();
 
     // Start status is status of first line
     status = rules[0][0];
@@ -49,7 +42,7 @@ int main(int argc, char* argv[]) {
 
     char rule[] = {"000"};
 
-    while (1) {
+    while (status != finalstatus) {
         printf("\n######### Step %i #########\n\n", step++);
 
         rule[0] = status;
@@ -60,21 +53,15 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-//        printf("\n");
-//        printf("%c, %c, %c\n", rule[0], rule[1], rule[2]);
-
         write_char(tape, rule[0]);
         status = rule[1];
-//        printf("move: %c\n", rule[2]);
         move(tape, rule[2]);
-//        printf("pointer position: %i\n", get_position_index(tape));
 
         print(tape);
-        if (isEndStatus(status)) {
-            printf("\nReached end status :-)\n");
-            break;
-        }
     }
+
+    printf("\nReached end status :-)\n");
+    break;
 
     return 0;
 }
@@ -144,6 +131,54 @@ int followRule(char* inout) {
             return 1;
         }
     }
+    return 0;
+}
+
+int findFinalState() {
+    int i, j;
+    int array1[26];
+    int array2[26];
+    int position1 = 0;
+    int position2 = 0;
+
+    for (i = 0; i < 26; i++) {
+        array1[i] = 0;
+        array2[i] = 0;
+    }
+
+    for (i = 0; i < rulescount; i++) {
+        for (j = 0; j < 26; j++){
+            if (array1[j] == rules[i][3]) {
+                break;
+            } else if (array1[j] == 0) {
+                array1[position1] = rules[i][3];
+                position1++;
+                break;
+            }
+        }
+    }
+
+    for (i = 0; i < rulescount; i++) {
+        for (j = 0; j < 26; j++){
+            if (array2[j] == rules[i][0]) {
+                break;
+            } else if (array2[j] == 0) {
+                array2[position2] = rules[i][0];
+                position2++;
+                break;
+            }
+        }
+    }
+
+    for (j = 0; j < 26; j++) {
+        for (i = 0; i < 26; i++) {
+            if (array1[j] == array2[i])
+                break;
+            if (i == 25)
+                return array1[j];
+        }
+    }
+
     return 0;
 }
 
