@@ -3,7 +3,7 @@
 
 #include "tape.h"
 
-#define RULESBUFFER 15
+#define RULESBUFFER 100
 #define RULESINPUTBUFFER 12
 #define INITINPUTBUFFER 2
 
