@@ -85,6 +85,7 @@ void move(struct tape *tape, char c) {
                 extension->prev = current;
                 current->next = extension;
             } else {
+                current->current_index = -1;
                 current = current->next;
                 current->current_index = 0;
             }
