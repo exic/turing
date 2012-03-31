@@ -1,5 +1,5 @@
 CXX = gcc
-CXXFLAGS = -g -Wall # -fprofile-arcs -ftest-coverage
+CXXFLAGS = -g -Wall -fprofile-arcs -ftest-coverage
 
 AR = ar
 ARFLAGS =
