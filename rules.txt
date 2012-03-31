@@ -1,0 +1,10 @@
+A b - B >
+A - - F =
+B b b B >
+B - - C >
+C b b C >
+C - b D <
+D b b D <
+D - - E <
+E b b E <
+E - b A >
