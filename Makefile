@@ -9,7 +9,9 @@ $(EXE): $(OBJS)
 #	gcc -o $(EXE) $(OBJS)
 	gcc -fprofile-arcs -o $(EXE) $(OBJS)
 
-run: all
+run:
+	./$(EXE) rules.txt init.txt
+run-gdb: all
 	gdb -batch -x gdbbatch --args turing rules.txt init.txt
 
 include Makefile.stdrules

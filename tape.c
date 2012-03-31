@@ -8,6 +8,10 @@ void init(struct tape *tape) {
 
     tape->current_index = 0;
     tape->t = (char *) malloc((TAPELEN+1) * sizeof (char));; // TODO: +1 for NULL termination - correct?
+    if (!tape->t) {
+        printf("Oh gawd, no memarey?!");
+        exit(1);
+    }
     int i;
     for (i = 0; i < TAPELEN; i++) {
         tape->t[i] = '-';
@@ -81,6 +85,10 @@ void move(struct tape *tape, char c) {
             if (!current->next) {
                 current->current_index = -1;
                 struct tape *extension = (struct tape *) malloc(sizeof (struct tape));
+                if (!extension) {
+                    printf("Oh gawd, no memarey?!");
+                    exit(1);
+                }
                 init(extension);
                 extension->prev = current;
                 current->next = extension;
@@ -96,6 +104,10 @@ void move(struct tape *tape, char c) {
         if (current->current_index == 0) {
             if (!current->prev) {
                 struct tape *extension = (struct tape *) malloc(sizeof (struct tape));
+                if (!extension) {
+                    printf("Oh gawd, no memarey?!");
+                    exit(1);
+                }
                 init(extension);
                 current->prev = extension;
                 extension->next = current;

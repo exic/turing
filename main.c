@@ -18,20 +18,23 @@ char status;
 struct tape *tape;
 
 int isEndStatus(status) {
-    if (status == 'F') {
+    if (status == 'e') {
         return 1;
     }
     return 0;
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     if (argc != 3) {
         printf("USAGE: Turing.exe <RULES> <INIT>");
         return 1;
     }
 
     tape = (struct tape *) malloc(sizeof (struct tape));
+    if (!tape) {
+        printf("Oh gawd, no memarey?!");
+        exit(1);
+    }
     init(tape);
 
     readRules(argv[1]);
