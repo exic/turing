@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "tape.h"
+#include "mymalloc.h"
 
 #define RULESBUFFER 100
 #define RULESINPUTBUFFER 12
@@ -13,6 +14,8 @@ void readRules(char* file);
 void readInit(char* file);
 int findFinalState();
 
+void nomemoryaction();
+
 char rules[RULESBUFFER][5];
 int rulescount = 0;
 char status;
@@ -20,15 +23,22 @@ char finalstatus;
 struct tape *tape;
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if (argc <= 2) {
         printf("USAGE: Turing.exe <RULES> <INIT>");
         return 1;
     }
 
-    tape = (struct tape *) malloc(sizeof (struct tape));
+    printf("argc: %i\n", argc);
+
+    malloccount = 0;
+    if (argc >= 4) {
+        wantedmalloccount = argv[3][0] - '0';
+        printf("wantedmalloccount: %i, argv[3]: %s\n", wantedmalloccount, argv[3]);
+    }
+
+    tape = (struct tape *) mymalloc(sizeof (struct tape));
     if (!tape) {
-        printf("Oh gawd, no memarey?!");
-        exit(1);
+        nomemoryaction();
     }
     init(tape);
     readRules(argv[1]);
@@ -183,3 +193,7 @@ int findFinalState() {
     return 0;
 }
 
+void nomemoryaction() {
+    printf("Oh gawd, no memarey?!\n");
+    exit(1);
+}

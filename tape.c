@@ -7,10 +7,9 @@ void init(struct tape *tape) {
     tape->next = NULL;
 
     tape->current_index = 0;
-    tape->t = (char *) malloc((TAPELEN+1) * sizeof (char));; // TODO: +1 for NULL termination - correct?
+    tape->t = (char *) mymalloc((TAPELEN+1) * sizeof (char));; // TODO: +1 for NULL termination - correct?
     if (!tape->t) {
-        printf("Oh gawd, no memarey?!");
-        exit(1);
+        nomemoryaction();
     }
     int i;
     for (i = 0; i < TAPELEN; i++) {
@@ -84,10 +83,9 @@ void move(struct tape *tape, char c) {
         if (current->current_index == TAPEMAXINDEX) {
             if (!current->next) {
                 current->current_index = -1;
-                struct tape *extension = (struct tape *) malloc(sizeof (struct tape));
+                struct tape *extension = (struct tape *) mymalloc(sizeof (struct tape));
                 if (!extension) {
-                    printf("Oh gawd, no memarey?!");
-                    exit(1);
+                    nomemoryaction();
                 }
                 init(extension);
                 extension->prev = current;
@@ -103,10 +101,9 @@ void move(struct tape *tape, char c) {
     } else if (c == '<') {
         if (current->current_index == 0) {
             if (!current->prev) {
-                struct tape *extension = (struct tape *) malloc(sizeof (struct tape));
+                struct tape *extension = (struct tape *) mymalloc(sizeof (struct tape));
                 if (!extension) {
-                    printf("Oh gawd, no memarey?!");
-                    exit(1);
+                    nomemoryaction();
                 }
                 init(extension);
                 current->prev = extension;
