@@ -14,4 +14,7 @@ run:
 run-gdb: all
 	gdb -batch -x gdbbatch --args turing rules.txt init.txt
 
+coverage:
+	gcov main.o tape.o
+
 include Makefile.stdrules
