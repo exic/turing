@@ -29,6 +29,6 @@ run-all: all badmalloc.o
 	bash -c './$(EXE) gobackwardsrules.txt <(echo "--") 2' || true
 
 coverage: run-all
-	gcov -f main.o tape.o
+	gcov main.o tape.o
 
 include Makefile.stdrules

@@ -1,6 +1,9 @@
 #ifndef _TAPE
 #define _TAPE
 
+#include "mymalloc.h"
+#include "main.h"
+
 #define TAPELEN 5
 #define TAPEMAXINDEX (TAPELEN-1)
 

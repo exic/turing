@@ -1,20 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "main.h"
 #include "tape.h"
 #include "mymalloc.h"
-
-#define RULESBUFFER 100
-#define RULESINPUTBUFFER 12
-#define INITINPUTBUFFER 2
-
-void storeRule(char* line, int counter);
-int followRule(char* inout);
-void readRules(char* file);
-void readInit(char* file);
-int findFinalState();
-
-void nomemoryaction();
 
 char rules[RULESBUFFER][5];
 int rulescount = 0;
